@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function CourseCard({ slug, track, title, level, duration, gradient }) {
   return (
-    <Link to={`/courses/${slug}`} className="course-card">
+    <Link to={`/practices/${slug}`} className="course-card">
       <div className="course-card-media" style={{ background: gradient }}>
         <svg width="46" height="46" viewBox="0 0 24 24" fill="none">
           <path d="M4 6.5 12 3l8 3.5-8 3.5-8-3.5Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
@@ -15,8 +15,7 @@ export default function CourseCard({ slug, track, title, level, duration, gradie
         <h3>{title}</h3>
         <div className="course-meta">
           <span>{level}</span>
-          <span>&middot;</span>
-          <span>{duration}</span>
+          <span className="course-meta-duration">{duration}</span>
         </div>
       </div>
     </Link>

@@ -9,9 +9,9 @@ export default function About() {
         <div className="container">
           <span className="eyebrow" style={{ justifyContent: 'center' }}>About Us</span>
           <h1>
-            We&rsquo;re a learning sciences company built on two convictions: that rapid
-            adaptation is the essential skill of our era, and that meaningful work should be
-            accessible to everyone.
+            We&rsquo;re a learning sciences company that works on-site with operations teams,
+            built on two convictions: that rapid adaptation is the essential skill of our era,
+            and that meaningful work should be accessible to everyone.
           </h1>
         </div>
       </section>
@@ -47,7 +47,7 @@ export default function About() {
             </div>
             <div className="stat-block">
               <b>5</b>
-              <span>Courses and Programs</span>
+              <span>Practice Areas</span>
             </div>
             <div className="stat-block">
               <b>4+</b>
@@ -63,9 +63,9 @@ export default function About() {
             <div>
               <span className="eyebrow">Our Vision</span>
               <p style={{ color: 'var(--slate-600)', marginBottom: 14 }}>
-                Stop hiring for skills you could build internally. We specialize in transforming
-                your existing teams into high-performing data practitioners through immersive,
-                scenario-based training that mirrors real workplace challenges.
+                Stop hiring for skills you could build internally. The talent you need is
+                usually already on your payroll. We embed with your team on-site, restructure
+                how the work gets done, and leave the capability behind.
               </p>
               <p style={{ color: 'var(--slate-600)', marginBottom: 14 }}>
                 Our Story-Centered Curriculum, refined over 20 years of learning science
@@ -76,7 +76,8 @@ export default function About() {
               <p style={{ color: 'var(--slate-600)' }}>
                 The ROI is straightforward: capable teams make better decisions faster, and
                 upskilling existing employees costs a fraction of recruiting, hiring, and
-                onboarding specialized talent.
+                onboarding specialized talent. Every engagement is measured against an operating
+                metric you already own.
               </p>
             </div>
             <div>
@@ -144,11 +145,15 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="cta-band">
-            <span className="eyebrow">Contact Us</span>
-            <h2>We&rsquo;d love to hear from you. Let&rsquo;s learn and grow together.</h2>
-            <p>Your journey starts with one message. Send it today.</p>
-            <Link to="/contact" className="btn btn-primary">
-              Contact Us
+            <span className="eyebrow">Capability Assessment</span>
+            <h2>Start with a capability assessment.</h2>
+            <p>
+              A two-week diagnostic that baselines where your team is, identifies the workflows
+              worth changing first, and produces a costed roadmap. It stands on its own, and it
+              scopes everything that follows.
+            </p>
+            <Link to="/capability-assessment" className="btn btn-primary">
+              See What&rsquo;s Involved
             </Link>
           </div>
         </div>

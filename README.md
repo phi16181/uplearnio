@@ -1,46 +1,71 @@
-# UpLearn.io — React Rebuild
+# UpLearn.io
 
-A fast, static React rebuild of uplearn.io (previously WordPress/Elementor), built with Vite.
+A fast, prerendered React site for uplearn.io (previously WordPress/Elementor), built with Vite.
 
-## Why it's faster
+UpLearn.io is positioned as an on-site AI capability-building practice for operations teams:
+the curriculum is assembled on-site around a client's workflows, systems, and data, and every
+engagement is measured against an operating metric the client already owns.
+
+## Why it's fast
 - No WordPress/PHP/MySQL request cycle — this compiles to static HTML/JS/CSS served from a CDN.
 - No page-builder (Elementor) runtime overhead or plugin bloat.
-- Production JS bundle: ~263 KB (~83 KB gzipped). CSS: ~12 KB gzipped. No external fonts or heavy images — visuals are inline SVG/CSS.
-- Client-side routing (React Router) means navigating between pages doesn't reload the whole document.
+- No external fonts or heavy images — visuals are inline SVG/CSS.
+- Every public route is prerendered to static HTML at build time, then hydrated, so crawlers
+  and AI assistants get real content and users still get client-side routing after first paint.
 
 ## Pages
 - `/` — Home
+- `/capability-assessment` — The two-week diagnostic that scopes every other engagement
 - `/about` — About
 - `/contact` — Contact
-- `/courses/:slug` — Course landing pages, driven by `src/data/courses.js`
+- `/practices/:slug` — Practice landing pages, driven by `src/data/courses.js`
+- `/courses/:slug` — Redirects to `/practices/:slug`, remapping renamed slugs on the way
 
-Course content (title, description, curriculum, FAQ, etc.) lives entirely in `src/data/courses.js` as a
-plain array — add, remove, or edit a course by editing that file. Every course automatically gets a page,
-a Header "Courses" dropdown entry, and a Footer link with no other code changes needed.
+## Practice content
+
+Everything on a practice page lives in `src/data/courses.js` as a plain array. Add, remove, or
+edit a practice by editing that file; each one automatically gets a page, a Header "Practices"
+dropdown entry, a Footer link, and a prerendered route with no other code changes.
+
+Per-entry fields:
+
+| Field | Purpose |
+|---|---|
+| `slug`, `title`, `track`, `gradient` | Identity, taxonomy, and card styling |
+| `level` | Organizational readiness — who this fits, not learner level |
+| `duration` | A concrete tailored range, e.g. `"10–16 weeks, tailored"` |
+| `metric` | The operating metric the engagement is measured against |
+| `builtAroundYou` | How the engagement is customized to the client. Required on every entry |
+| `engagement` | How the work actually runs: on-site cadence, participants, structure |
+| `deliverables` | Artifacts the client organization owns afterward — never access, never membership |
+| `tagline`, `intro`, `reasons`, `outcomeIntro`, `outcomes`, `audience`, `faqs` | Page body |
+| `quote`, `closingEyebrow`, `closingTitle`, `closingBody` | Pull quote and closing CTA |
+
+`FEATURED_SLUGS` controls which two practices lead the homepage. `SLUG_REDIRECTS` maps
+pre-repositioning slugs to their current ones.
 
 ## Getting started
 ```
 npm install
-npm run dev       # local dev server
-npm run build     # production build -> dist/
-npm run preview   # preview the production build locally
+npm run dev            # local dev server
+npm run build          # client build + SSR build + prerender -> dist/
+npm run build:client   # client build only, no prerender
+npm run preview        # preview the production build locally
 ```
 
-## ⚠️ Logo — action needed
-I could not download the actual logo file from uplearn.io (the sandbox this was built in has no network
-access to your domain, and the browser extension wasn't connected). `src/assets/logo.svg` is currently a
-placeholder mark so the header/footer aren't empty.
-
-To finish: replace `src/assets/logo.svg` with your real logo file. If your real logo is a PNG/JPG instead
-of SVG, drop it in `src/assets/` (e.g. `logo.png`) and update the two `import logo from '../assets/logo.svg'`
-lines in `src/components/Header.jsx` and `src/components/Footer.jsx` to point at the new filename.
-
-## Images
-All other imagery (hero graphic, course card icons, testimonial avatars) was rebuilt as lightweight inline
-SVG/CSS rather than re-hosting the original JPEGs — this keeps the site fast and avoids large image
-downloads. Swap in real photos any time by adding files to `src/assets/` and importing them where needed.
+`npm run build` runs three steps: a client build, an SSR build of `src/entry-server.jsx` into
+`dist-ssr/`, and `scripts/prerender.js`, which renders each public route and writes
+`dist/<route>/index.html` with a route-specific `<title>` and meta description. New public
+routes need an entry in the `ROUTES` array in that script (practice pages are generated from
+`src/data/courses.js` automatically).
 
 ## Deploying
-This is a static site. `npm run build` outputs a `dist/` folder you can deploy to Netlify, Vercel,
-Cloudflare Pages, GitHub Pages, or any static host/CDN. Configure your host to redirect all paths to
-`index.html` (SPA fallback) so client-side routing works on refresh/direct links.
+This is a static site. `npm run build` outputs a `dist/` folder you can deploy to Netlify,
+Vercel, Cloudflare Pages, GitHub Pages, or any static host/CDN. Prerendered routes are served
+as real files; still configure an SPA fallback to `index.html` for anything not prerendered
+(such as `/courses/:slug` redirect links) so client-side routing works on direct hits.
+
+## Images
+Imagery beyond the logo and founder photo is inline SVG/CSS rather than re-hosted JPEGs, which
+keeps the site fast. Swap in real photos any time by adding files to `src/assets/` and importing
+them where needed.
