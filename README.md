@@ -33,7 +33,7 @@ Per-entry fields:
 |---|---|
 | `slug`, `title`, `track`, `gradient` | Identity, taxonomy, and card styling |
 | `level` | Organizational readiness — who this fits, not learner level |
-| `duration` | A concrete tailored range, e.g. `"10–16 weeks, tailored"` |
+| `duration` | Always `"Tailored"` — engagement length is scoped per client, never advertised |
 | `metric` | The operating metric the engagement is measured against |
 | `builtAroundYou` | How the engagement is customized to the client. Required on every entry |
 | `engagement` | How the work actually runs: on-site cadence, participants, structure |
