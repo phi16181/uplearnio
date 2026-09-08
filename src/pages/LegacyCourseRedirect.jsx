@@ -1,10 +1,10 @@
 import { Navigate, useParams } from 'react-router-dom'
-import { getRedirectForSlug } from '../data/courses.js'
+import { resolvePracticePath } from '../data/courses.js'
 
-// The catalog moved from /courses/:slug to /practices/:slug during the
-// repositioning, and four slugs were renamed at the same time. Both hops
-// happen here so links already in circulation keep resolving.
+// The catalog moved from /courses/:slug to /practices/:slug, some practices
+// were renamed, and three were retired. Every old link resolves here: to the
+// current page where one exists, to the practice index where it does not.
 export default function LegacyCourseRedirect() {
   const { slug } = useParams()
-  return <Navigate to={`/practices/${getRedirectForSlug(slug) ?? slug}`} replace />
+  return <Navigate to={resolvePracticePath(slug)} replace />
 }

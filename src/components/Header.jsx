@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import logo from '../assets/logo.png'
-import courses from '../data/courses.js'
+import courses, { LEAD_SLUG } from '../data/courses.js'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -42,6 +42,16 @@ export default function Header() {
               </svg>
             </summary>
             <ul className="dropdown-panel">
+              <li>
+                <NavLink
+                  to="/practices"
+                  end
+                  onClick={closeAll}
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                >
+                  All Practices
+                </NavLink>
+              </li>
               {courses.map((course) => (
                 <li key={course.slug}>
                   <NavLink
@@ -65,8 +75,8 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          <Link to="/capability-assessment" className="btn btn-primary">
-            Get Started
+          <Link to={`/practices/${LEAD_SLUG}`} className="btn btn-primary">
+            Start With a Roadmap
           </Link>
           <button
             className="nav-toggle"

@@ -4,7 +4,7 @@ import courses from '../data/courses.js'
 
 const QUICK_LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/capability-assessment', label: 'Capability Assessment' },
+  { to: '/practices', label: 'All Practices' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -20,9 +20,9 @@ export default function Footer() {
               <span className="brand-name">UpLearn.io</span>
             </Link>
             <p className="footer-about">
-              On-site AI capability building for operations teams. We build the curriculum
-              around your workflows, your systems, and your data, then leave the capability
-              behind.
+              On-site AI capability building for supply chain organizations. We build the
+              curriculum around your workflows, your systems, and your data, then leave the
+              capability behind.
             </p>
             <div className="footer-social">
               <a href="https://www.facebook.com/profile.php?id=61581394787873" target="_blank" rel="noreferrer" aria-label="Facebook">
