@@ -1,29 +1,14 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { getCourseBySlug, getRedirectForSlug } from '../data/courses.js'
+import { LEAD_SLUG, getCourseBySlug, resolvePracticePath } from '../data/courses.js'
 
 export default function CourseDetail() {
   const { slug } = useParams()
   const course = getCourseBySlug(slug)
 
-  // Slugs changed when the catalog became a practice list. Old links still land.
-  const redirect = course ? undefined : getRedirectForSlug(slug)
-  if (redirect) {
-    return <Navigate to={`/practices/${redirect}`} replace />
-  }
-
+  // Practices were renamed and retired during the repositioning. Anything that
+  // is not a current practice resolves to where it belongs now.
   if (!course) {
-    return (
-      <section className="section">
-        <div className="container" style={{ textAlign: 'center' }}>
-          <span className="eyebrow" style={{ justifyContent: 'center' }}>Practice Not Found</span>
-          <h1 style={{ fontSize: 32, marginBottom: 16 }}>We couldn&rsquo;t find that practice.</h1>
-          <p style={{ color: 'var(--slate-500)', marginBottom: 28 }}>
-            It may have moved. Browse our current practices or get in touch below.
-          </p>
-          <Link to="/contact" className="btn btn-primary">Contact Us</Link>
-        </div>
-      </section>
-    )
+    return <Navigate to={resolvePracticePath(slug)} replace />
   }
 
   const {
@@ -48,6 +33,10 @@ export default function CourseDetail() {
     closingBody,
   } = course
 
+  const isLead = course.slug === LEAD_SLUG
+  const ctaTo = isLead ? '/contact' : `/practices/${LEAD_SLUG}`
+  const ctaLabel = isLead ? 'Request This Engagement' : 'Start With a Roadmap'
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 80 }}>
@@ -58,7 +47,7 @@ export default function CourseDetail() {
             <p className="lead" style={{ margin: '20px auto 34px' }}>{tagline}</p>
             <p style={{ color: 'var(--slate-400)', maxWidth: 640, margin: '0 auto 34px' }}>{intro}</p>
             <div className="hero-cta" style={{ justifyContent: 'center' }}>
-              <Link to="/capability-assessment" className="btn btn-primary">Request a Capability Assessment</Link>
+              <Link to={ctaTo} className="btn btn-primary">{ctaLabel}</Link>
               <Link to="/contact" className="btn btn-ghost">Talk to Us</Link>
             </div>
           </div>
@@ -126,7 +115,7 @@ export default function CourseDetail() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: 40 }}>
-            <Link to="/capability-assessment" className="btn btn-primary">Request a Capability Assessment</Link>
+            <Link to={ctaTo} className="btn btn-primary">{ctaLabel}</Link>
           </div>
         </div>
       </section>
@@ -213,7 +202,7 @@ export default function CourseDetail() {
             <span className="eyebrow">{closingEyebrow}</span>
             <h2>{closingTitle}</h2>
             <p>{closingBody}</p>
-            <Link to="/capability-assessment" className="btn btn-primary">Start With a Capability Assessment</Link>
+            <Link to={ctaTo} className="btn btn-primary">{ctaLabel}</Link>
           </div>
         </div>
       </section>

@@ -5,7 +5,12 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import courses, { SLUG_REDIRECTS } from '../src/data/courses.js'
+import courses, {
+  LEAD_SLUG,
+  RETIRED_SLUGS,
+  SLUG_REDIRECTS,
+  resolvePracticePath,
+} from '../src/data/courses.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = path.join(root, 'dist')
@@ -20,10 +25,10 @@ const ROUTES = [
       'Generic AI training does not survive contact with your operation. We build the curriculum on-site, around your workflows, your systems, and your data, then leave the capability behind.',
   },
   {
-    url: '/capability-assessment',
-    title: `Capability Assessment — ${SITE_NAME}`,
+    url: '/practices',
+    title: `Practices — ${SITE_NAME}`,
     description:
-      'An on-site diagnostic that baselines where your team is, identifies the workflows worth changing first, and produces a costed roadmap.',
+      'Three practices for supply chain organizations: a roadmap that says where AI pays, agentic AI built into your workflows, and the learning capability that keeps it working.',
   },
   {
     url: '/about',
@@ -83,18 +88,13 @@ for (const route of ROUTES) {
   console.log(`prerendered ${route.url}`)
 }
 
-// The catalog used to live at /courses/:slug and four slugs were renamed with
-// it. A host-level 301 is the right answer where you can configure one; these
-// stubs are what a plain static host serves in the meantime. They deliberately
-// skip the app bundle, so a crawler follows the canonical link and a browser
-// never hydrates the wrong markup.
-const LEGACY_SLUGS = [
-  ...Object.keys(SLUG_REDIRECTS),
-  ...courses.map((course) => course.slug).filter((slug) => !(slug in SLUG_REDIRECTS)),
-]
-
-for (const legacySlug of LEGACY_SLUGS) {
-  const target = `/practices/${SLUG_REDIRECTS[legacySlug] ?? legacySlug}`
+// URLs that no longer host a page: the old /courses/:slug catalog, practices
+// that were renamed, practices that were retired, and the capability
+// assessment that became the roadmap practice. A host-level 301 is the right
+// answer where you can configure one; these stubs are what a plain static host
+// serves in the meantime. They deliberately skip the app bundle, so a crawler
+// follows the canonical link and a browser never hydrates the wrong markup.
+async function writeRedirectStub(fromPath, target) {
   const stub = `<!doctype html>
 <html lang="en">
   <head>
@@ -110,10 +110,27 @@ for (const legacySlug of LEGACY_SLUGS) {
 </html>
 `
 
-  const outFile = path.join(distDir, 'courses', legacySlug, 'index.html')
+  const outFile = path.join(distDir, fromPath, 'index.html')
   await mkdir(path.dirname(outFile), { recursive: true })
   await writeFile(outFile, stub)
-  console.log(`redirect stub /courses/${legacySlug} -> ${target}`)
+  console.log(`redirect stub /${fromPath} -> ${target}`)
 }
 
-console.log(`prerender: wrote ${ROUTES.length} routes and ${LEGACY_SLUGS.length} redirect stubs`)
+const LEGACY_SLUGS = [
+  ...Object.keys(SLUG_REDIRECTS),
+  ...RETIRED_SLUGS,
+  ...courses.map((course) => course.slug),
+].filter((slug, i, all) => all.indexOf(slug) === i)
+
+for (const legacySlug of LEGACY_SLUGS) {
+  await writeRedirectStub(`courses/${legacySlug}`, resolvePracticePath(legacySlug))
+}
+
+// The bare catalog index, and the capability assessment that became the
+// Supply Chain AI Roadmap practice.
+await writeRedirectStub('courses', '/practices')
+await writeRedirectStub('capability-assessment', resolvePracticePath(LEAD_SLUG))
+
+console.log(
+  `prerender: wrote ${ROUTES.length} routes and ${LEGACY_SLUGS.length + 2} redirect stubs`,
+)

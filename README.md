@@ -2,9 +2,14 @@
 
 A fast, prerendered React site for uplearn.io (previously WordPress/Elementor), built with Vite.
 
-UpLearn.io is positioned as an on-site AI capability-building practice for operations teams:
-the curriculum is assembled on-site around a client's workflows, systems, and data, and every
-engagement is measured against an operating metric the client already owns.
+UpLearn.io is positioned as an on-site AI capability-building practice for supply chain
+organizations, exclusively: the curriculum is assembled on-site around a client's workflows,
+systems, and data, and every engagement is measured against an operating metric the client
+already owns.
+
+Three practices form a ladder. Most clients enter at the **Supply Chain AI Roadmap**, which
+says where AI pays and scopes whichever of the other two — **Agentic AI for Supply Chain
+Operations** or **Learning Velocity** — they actually need.
 
 ## Why it's fast
 - No WordPress/PHP/MySQL request cycle — this compiles to static HTML/JS/CSS served from a CDN.
@@ -15,11 +20,13 @@ engagement is measured against an operating metric the client already owns.
 
 ## Pages
 - `/` — Home
-- `/capability-assessment` — The on-site diagnostic that scopes every other engagement
+- `/practices` — The practice index and the ladder
 - `/about` — About
 - `/contact` — Contact
 - `/practices/:slug` — Practice landing pages, driven by `src/data/courses.js`
-- `/courses/:slug` — Redirects to `/practices/:slug`, remapping renamed slugs on the way
+- `/courses/:slug` — Redirects into `/practices`, remapping renamed slugs and sending
+  retired ones to the index
+- `/capability-assessment` — Redirects to the roadmap practice, which replaced it
 
 ## Practice content
 
@@ -41,8 +48,14 @@ Per-entry fields:
 | `tagline`, `intro`, `reasons`, `outcomeIntro`, `outcomes`, `audience`, `faqs` | Page body |
 | `quote`, `closingEyebrow`, `closingTitle`, `closingBody` | Pull quote and closing CTA |
 
-`FEATURED_SLUGS` controls which two practices lead the homepage. `SLUG_REDIRECTS` maps
-pre-repositioning slugs to their current ones.
+`LEAD_SLUG` names the front-door practice that the homepage, header, and every other
+practice page point at. `SLUG_REDIRECTS` maps renamed slugs to their current ones and
+`RETIRED_SLUGS` lists practices that no longer exist; `resolvePracticePath(slug)` resolves
+either to the right destination and is used by the router and the prerender script alike.
+
+**No engagement states a duration.** `duration` is `"Tailored"` on every practice, and no
+copy anywhere states a phase length or a session cadence. Scoping happens per client, in
+the roadmap engagement.
 
 ## Getting started
 ```

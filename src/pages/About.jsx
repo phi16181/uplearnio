@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import profilePhoto from "../assets/profile.jpg";
+import { LEAD_SLUG } from '../data/courses.js';
 
 
 export default function About() {
@@ -9,9 +10,9 @@ export default function About() {
         <div className="container">
           <span className="eyebrow" style={{ justifyContent: 'center' }}>About Us</span>
           <h1>
-            We&rsquo;re a learning sciences company that works on-site with operations teams,
-            built on two convictions: that rapid adaptation is the essential skill of our era,
-            and that meaningful work should be accessible to everyone.
+            We&rsquo;re a learning sciences company that works on-site with supply chain
+            organizations, built on two convictions: that rapid adaptation is the essential
+            skill of our era, and that meaningful work should be accessible to everyone.
           </h1>
         </div>
       </section>
@@ -35,6 +36,47 @@ export default function About() {
         </div>
       </section>
 
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-header center">
+            <span className="eyebrow">Who Teaches This</span>
+            <h2>Taught by someone who has run the operation</h2>
+            <p>
+              Big 4 firms staff industrial engagements with people who have never been in a
+              distribution center. Every engagement here is led by an operator.
+            </p>
+          </div>
+          <div className="grid-3">
+            <div className="feature-card">
+              <h3>Global supply chain operations</h3>
+              <p>
+                Leadership across planning, sourcing, execution, and logistics &mdash; the
+                same functions these engagements are built around. The assessment work is done
+                by someone who has carried the operating metrics being discussed, not by a
+                consultant applying a maturity model to an industry they have read about.
+              </p>
+            </div>
+            <div className="feature-card">
+              <h3>Systems built, not just taught</h3>
+              <p>
+                Three engineering degrees and thirty years as a practicing software and systems
+                engineer. The architecture, integration, and governance work in the agentic
+                practice is work our founder has shipped, including the failure modes.
+              </p>
+            </div>
+            <div className="feature-card">
+              <h3>Georgia Tech, and two decades of learning science</h3>
+              <p>
+                Instructor affiliation with Georgia Tech and teaching experience at three
+                Research I universities. The Story-Centered Curriculum method behind every
+                engagement comes from twenty years of applying learning science research, not
+                from a course design template.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section section-dark">
         <div className="container">
           <div className="section-header center">
@@ -46,12 +88,12 @@ export default function About() {
               <span>Years of Experience</span>
             </div>
             <div className="stat-block">
-              <b>5</b>
+              <b>3</b>
               <span>Practice Areas</span>
             </div>
             <div className="stat-block">
-              <b>4+</b>
-              <span>Focus Areas</span>
+              <b>1</b>
+              <span>Industry We Work In</span>
             </div>
           </div>
         </div>
@@ -64,8 +106,8 @@ export default function About() {
               <span className="eyebrow">Our Vision</span>
               <p style={{ color: 'var(--slate-600)', marginBottom: 14 }}>
                 Stop hiring for skills you could build internally. The talent you need is
-                usually already on your payroll. We embed with your team on-site, restructure
-                how the work gets done, and leave the capability behind.
+                usually already on your payroll. We embed with your supply chain team on-site,
+                restructure how the work gets done, and leave the capability behind.
               </p>
               <p style={{ color: 'var(--slate-600)', marginBottom: 14 }}>
                 Our Story-Centered Curriculum, refined over 20 years of learning science
@@ -145,15 +187,16 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="cta-band">
-            <span className="eyebrow">Capability Assessment</span>
-            <h2>Start with a capability assessment.</h2>
+            <span className="eyebrow">Start Here</span>
+            <h2>Start with a roadmap.</h2>
             <p>
-              A diagnostic that baselines where your team is, identifies the workflows worth
-              changing first, and produces a costed roadmap. It stands on its own, and it scopes
-              everything that follows.
+              We assess where AI actually pays in your network, whether your data can support
+              it, and what to fund first. You leave with a costed, sequenced plan you can defend
+              to finance &mdash; and a clear view of which of our other practices, if any, you
+              need.
             </p>
-            <Link to="/capability-assessment" className="btn btn-primary">
-              See What&rsquo;s Involved
+            <Link to={`/practices/${LEAD_SLUG}`} className="btn btn-primary">
+              Start With a Roadmap
             </Link>
           </div>
         </div>

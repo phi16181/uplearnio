@@ -3,7 +3,7 @@ import CourseCard from '../components/CourseCard.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
 import Testimonial from '../components/Testimonial.jsx'
 import NetworkArt from '../components/NetworkArt.jsx'
-import courses, { getFeaturedCourses } from '../data/courses.js'
+import courses, { LEAD_SLUG } from '../data/courses.js'
 
 const TESTIMONIALS = [
   {
@@ -37,26 +37,24 @@ const TESTIMONIALS = [
 ]
 
 export default function Home() {
-  const featured = getFeaturedCourses()
-
   return (
     <>
       <section className="hero">
         <div className="container">
           <div>
-            <span className="eyebrow">On-Site AI Capability Building</span>
+            <span className="eyebrow">On-Site AI Capability Building for Supply Chain</span>
             <h1>
               Generic AI training doesn&rsquo;t survive contact with{' '}
-              <span className="hero-accent">your operation.</span>
+              <span className="hero-accent">your network.</span>
             </h1>
             <p className="lead">
               We build the curriculum on-site, around your workflows, your systems, and your
-              data. Your team learns by doing their actual work differently. Then they keep
-              doing it after we leave.
+              data. Your planners, buyers, and site teams learn by doing their actual work
+              differently. Then they keep doing it after we leave.
             </p>
             <div className="hero-cta">
-              <Link to="/capability-assessment" className="btn btn-primary">
-                Request a Capability Assessment
+              <Link to={`/practices/${LEAD_SLUG}`} className="btn btn-primary">
+                Start With a Roadmap
               </Link>
               <Link to="/contact" className="btn btn-ghost">
                 Talk to Us
@@ -68,12 +66,12 @@ export default function Home() {
                 <span>Years of Experience</span>
               </div>
               <div className="hero-stat">
-                <b>5</b>
-                <span>Practice Areas</span>
+                <b>1</b>
+                <span>Industry We Work In</span>
               </div>
               <div className="hero-stat">
-                <b>100%</b>
-                <span>Built on Your Data</span>
+                <b>3</b>
+                <span>Practice Areas</span>
               </div>
             </div>
           </div>
@@ -85,81 +83,23 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <div className="section-header">
-            <span className="eyebrow">Where Most Engagements Start</span>
-            <h2>Two practices lead the work</h2>
-            <p>
-              One builds the capacity to absorb whatever technology arrives next. The other puts
-              working AI inside the workflows your operation already runs on.
-            </p>
-          </div>
-          <div className="featured-stack">
-            {featured.map((course) => (
-              <div key={course.slug} className="featured-course">
-                <div>
-                  <span className="eyebrow">{course.track} &middot; {course.duration}</span>
-                  <h2>{course.title}</h2>
-                  <p style={{ marginTop: 16, color: 'var(--slate-400)' }}>{course.tagline}</p>
-                  <p style={{ marginTop: 14, color: 'var(--slate-400)', fontSize: 14.5 }}>
-                    <strong style={{ color: 'var(--teal-400)' }}>Measured against:</strong>{' '}
-                    {course.metric}
-                  </p>
-                  <Link to={`/practices/${course.slug}`} className="btn btn-primary">
-                    See How It Works
-                  </Link>
-                </div>
-                <ul>
-                  {course.outcomes.map((o) => (
-                    <li key={o.title}>
-                      <span className="check-dot">&#10003;</span>
-                      <span>
-                        <strong>{o.title}.</strong> {o.body}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-alt">
-        <div className="container">
-          <div className="section-header center">
-            <span className="eyebrow">Practice Areas</span>
-            <h2>Our Practices</h2>
-            <p>
-              Named practices with a stated method. The curriculum inside each one is assembled
-              on-site, around the work your team is already accountable for.
-            </p>
-          </div>
-          <div className="grid-3">
-            {courses.map((course) => (
-              <CourseCard key={course.slug} {...course} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
           <div className="section-header center">
             <span className="eyebrow">Why UpLearn.io</span>
             <h2>What Makes Us Different</h2>
           </div>
           <div className="grid-4">
-            <FeatureCard icon={<span>&#128202;</span>} title="Built on your data">
-              No sample datasets, no generic case studies. We work from your systems, your
-              constraints, and the problems your team is already stuck on.
+            <FeatureCard icon={<span>&#128666;</span>} title="Supply chain only">
+              We work in one industry. Planning, sourcing, execution, logistics. Not a general
+              practice with a supply chain slide.
             </FeatureCard>
             <FeatureCard icon={<span>&#128736;</span>} title="Taught by operators">
-              Your instructors have run global supply chain operations and built the systems
-              being taught. Not trainers who read the documentation last month.
+              Your instructors have run global supply chain and built the systems being taught.
+              Not trainers who read the documentation last month.
             </FeatureCard>
             <FeatureCard icon={<span>&#128207;</span>} title="Measured against your numbers">
-              Every engagement starts with a baseline and ends against an operating metric you
-              already own. Most organizations cannot measure AI ROI at all. You will.
+              Every engagement starts with a baseline and ends against a metric you already
+              own &mdash; fill rate, cycle time, working capital, expedite spend. Most
+              organizations cannot measure AI ROI at all. You will.
             </FeatureCard>
             <FeatureCard icon={<span>&#129309;</span>} title="Designed to be handed off">
               The goal is a team that does not need us next year. We build the internal
@@ -203,6 +143,24 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="section-header center">
+            <span className="eyebrow">Our Practices</span>
+            <h2>Where to start, what to build, how to make it stick</h2>
+            <p>
+              Three practices. Most clients start with the roadmap, because it tells them which
+              of the other two they need.
+            </p>
+          </div>
+          <div className="grid-3">
+            {courses.map((course) => (
+              <CourseCard key={course.slug} {...course} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-header center">
             <span className="eyebrow">Testimonials</span>
             <h2>What teams say</h2>
           </div>
@@ -214,18 +172,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <div className="cta-band">
-            <span className="eyebrow">Capability Assessment</span>
-            <h2>Start with a capability assessment.</h2>
+            <span className="eyebrow">Start Here</span>
+            <h2>Start with a roadmap.</h2>
             <p>
-              A diagnostic that baselines where your team is, identifies the workflows worth
-              changing first, and produces a costed roadmap. It stands on its own, and it scopes
-              everything that follows.
+              We assess where AI actually pays in your network, whether your data can support
+              it, and what to fund first. You leave with a costed, sequenced plan you can defend
+              to finance &mdash; and a clear view of which of our other practices, if any, you
+              need.
             </p>
-            <Link to="/capability-assessment" className="btn btn-primary">
-              See What&rsquo;s Involved
+            <Link to={`/practices/${LEAD_SLUG}`} className="btn btn-primary">
+              Start With a Roadmap
             </Link>
           </div>
         </div>
