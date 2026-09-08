@@ -6,8 +6,8 @@ export default function Contact() {
           <span className="eyebrow" style={{ justifyContent: 'center' }}>Contact Us</span>
           <h1>Tell us what your operation is trying to get done.</h1>
           <p>
-            Most conversations start with a two-week capability assessment. Tell us which teams
-            own the work and we&rsquo;ll come back with scope, timing, and price.
+            Most conversations start with a capability assessment. Tell us which teams own the
+            work and we&rsquo;ll come back with scope and price.
           </p>
         </div>
       </section>

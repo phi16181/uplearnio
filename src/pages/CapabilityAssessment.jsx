@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 
-const WEEKS = [
+const PHASES = [
   {
-    label: 'Week One',
+    label: 'Phase One',
     title: 'On-site, in the operation',
     body: 'We sit with the teams doing the work. We map the workflows, look at the systems behind them, and find where decisions are slow, manual, or made on a spreadsheet nobody fully understands.',
   },
   {
-    label: 'Week Two',
+    label: 'Phase Two',
     title: 'Baseline, prioritize, cost',
     body: 'We baseline the operating metrics that matter, rank the workflows worth changing first by value and feasibility, and cost the sequence. Then we read it back to your leadership team.',
   },
@@ -36,7 +36,7 @@ export default function CapabilityAssessment() {
         <div className="container">
           <span className="eyebrow" style={{ justifyContent: 'center' }}>Capability Assessment</span>
           <h1>
-            A two-week diagnostic that tells you where to start, and what it will cost.
+            A diagnostic that tells you where to start, and what it will cost.
           </h1>
           <p className="lead" style={{ margin: '20px auto 0', maxWidth: 680 }}>
             Fixed price, fixed scope, on-site. It baselines where your team actually is,
@@ -53,18 +53,18 @@ export default function CapabilityAssessment() {
         <div className="container">
           <div className="section-header center">
             <span className="eyebrow">How It Runs</span>
-            <h2>Two weeks, on your floor</h2>
+            <h2>On your floor, in the actual work</h2>
             <p>
               No questionnaire, no maturity model. We assess your operation against the
               initiative you are actually trying to get done.
             </p>
           </div>
           <div className="grid-2">
-            {WEEKS.map((week) => (
-              <div key={week.label} className="feature-card">
-                <span className="eyebrow">{week.label}</span>
-                <h3>{week.title}</h3>
-                <p style={{ color: 'var(--slate-500)', fontSize: 14.5 }}>{week.body}</p>
+            {PHASES.map((phase) => (
+              <div key={phase.label} className="feature-card">
+                <span className="eyebrow">{phase.label}</span>
+                <h3>{phase.title}</h3>
+                <p style={{ color: 'var(--slate-500)', fontSize: 14.5 }}>{phase.body}</p>
               </div>
             ))}
           </div>
@@ -77,8 +77,8 @@ export default function CapabilityAssessment() {
             <span className="eyebrow">What You Keep</span>
             <h2>The assessment is a deliverable, not a sales call</h2>
             <p>
-              Everything below is yours at the end of week two, whether or not you engage us for
-              anything after it.
+              Everything below is yours when the assessment closes, whether or not you engage
+              us for anything after it.
             </p>
           </div>
           <div className="included-list">
@@ -123,7 +123,7 @@ export default function CapabilityAssessment() {
         <div className="container">
           <div className="cta-band">
             <span className="eyebrow">Start Here</span>
-            <h2>Two weeks to a costed plan.</h2>
+            <h2>A costed plan, not a proposal.</h2>
             <p>
               Tell us what you are trying to get done and which teams own it. We will come back
               with scope, timing, and price.

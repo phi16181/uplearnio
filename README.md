@@ -15,7 +15,7 @@ engagement is measured against an operating metric the client already owns.
 
 ## Pages
 - `/` — Home
-- `/capability-assessment` — The two-week diagnostic that scopes every other engagement
+- `/capability-assessment` — The on-site diagnostic that scopes every other engagement
 - `/about` — About
 - `/contact` — Contact
 - `/practices/:slug` — Practice landing pages, driven by `src/data/courses.js`

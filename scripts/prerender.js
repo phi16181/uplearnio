@@ -23,7 +23,7 @@ const ROUTES = [
     url: '/capability-assessment',
     title: `Capability Assessment — ${SITE_NAME}`,
     description:
-      'A two-week on-site diagnostic that baselines where your team is, identifies the workflows worth changing first, and produces a costed roadmap.',
+      'An on-site diagnostic that baselines where your team is, identifies the workflows worth changing first, and produces a costed roadmap.',
   },
   {
     url: '/about',

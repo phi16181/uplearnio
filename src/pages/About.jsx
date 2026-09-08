@@ -148,9 +148,9 @@ export default function About() {
             <span className="eyebrow">Capability Assessment</span>
             <h2>Start with a capability assessment.</h2>
             <p>
-              A two-week diagnostic that baselines where your team is, identifies the workflows
-              worth changing first, and produces a costed roadmap. It stands on its own, and it
-              scopes everything that follows.
+              A diagnostic that baselines where your team is, identifies the workflows worth
+              changing first, and produces a costed roadmap. It stands on its own, and it scopes
+              everything that follows.
             </p>
             <Link to="/capability-assessment" className="btn btn-primary">
               See What&rsquo;s Involved
