@@ -1,18 +1,24 @@
-import { Link, useParams } from 'react-router-dom'
-import { getCourseBySlug } from '../data/courses.js'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { getCourseBySlug, getRedirectForSlug } from '../data/courses.js'
 
 export default function CourseDetail() {
   const { slug } = useParams()
   const course = getCourseBySlug(slug)
 
+  // Slugs changed when the catalog became a practice list. Old links still land.
+  const redirect = course ? undefined : getRedirectForSlug(slug)
+  if (redirect) {
+    return <Navigate to={`/practices/${redirect}`} replace />
+  }
+
   if (!course) {
     return (
       <section className="section">
         <div className="container" style={{ textAlign: 'center' }}>
-          <span className="eyebrow" style={{ justifyContent: 'center' }}>Course Not Found</span>
-          <h1 style={{ fontSize: 32, marginBottom: 16 }}>We couldn&rsquo;t find that course.</h1>
+          <span className="eyebrow" style={{ justifyContent: 'center' }}>Practice Not Found</span>
+          <h1 style={{ fontSize: 32, marginBottom: 16 }}>We couldn&rsquo;t find that practice.</h1>
           <p style={{ color: 'var(--slate-500)', marginBottom: 28 }}>
-            It may have moved. Browse our current courses or get in touch below.
+            It may have moved. Browse our current practices or get in touch below.
           </p>
           <Link to="/contact" className="btn btn-primary">Contact Us</Link>
         </div>
@@ -25,13 +31,16 @@ export default function CourseDetail() {
     track,
     level,
     duration,
+    metric,
     tagline,
     intro,
+    builtAroundYou,
     reasons,
     outcomeIntro,
     outcomes,
     audience,
-    included,
+    engagement,
+    deliverables,
     faqs,
     quote,
     closingEyebrow,
@@ -44,12 +53,13 @@ export default function CourseDetail() {
       <section className="hero" style={{ paddingBottom: 80 }}>
         <div className="container" style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: 760, margin: '0 auto' }}>
           <div>
-            <span className="eyebrow" style={{ justifyContent: 'center' }}>{track} &middot; {level} &middot; {duration}</span>
+            <span className="eyebrow" style={{ justifyContent: 'center' }}>{track} &middot; {duration}</span>
             <h1>{title}</h1>
             <p className="lead" style={{ margin: '20px auto 34px' }}>{tagline}</p>
             <p style={{ color: 'var(--slate-400)', maxWidth: 640, margin: '0 auto 34px' }}>{intro}</p>
             <div className="hero-cta" style={{ justifyContent: 'center' }}>
-              <Link to="/contact" className="btn btn-primary">Get More Information</Link>
+              <Link to="/capability-assessment" className="btn btn-primary">Request a Capability Assessment</Link>
+              <Link to="/contact" className="btn btn-ghost">Talk to Us</Link>
             </div>
           </div>
         </div>
@@ -57,8 +67,33 @@ export default function CourseDetail() {
 
       <section className="section">
         <div className="container">
+          <div className="engagement-facts">
+            <div className="engagement-fact">
+              <span>Built around you</span>
+              <p>{builtAroundYou}</p>
+            </div>
+            <div className="engagement-fact-side">
+              <div className="engagement-fact">
+                <span>Measured against</span>
+                <p>{metric}</p>
+              </div>
+              <div className="engagement-fact">
+                <span>Fit</span>
+                <p>{level}</p>
+              </div>
+              <div className="engagement-fact">
+                <span>Duration</span>
+                <p>{duration}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
           <div className="section-header center">
-            <span className="eyebrow">Why This Course</span>
+            <span className="eyebrow">Why This Practice</span>
             <h2>What Makes This Different</h2>
           </div>
           <div className="reason-row">
@@ -73,11 +108,11 @@ export default function CourseDetail() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <div className="section-header center">
-            <span className="eyebrow">Curriculum</span>
-            <h2>What You&rsquo;ll Gain</h2>
+            <span className="eyebrow">Outcomes</span>
+            <h2>What Your Team Walks Away With</h2>
             <p>
               <strong>Your Outcome:</strong> {outcomeIntro}
             </p>
@@ -91,16 +126,16 @@ export default function CourseDetail() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: 40 }}>
-            <Link to="/contact" className="btn btn-primary">Get More Information</Link>
+            <Link to="/capability-assessment" className="btn btn-primary">Request a Capability Assessment</Link>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <div className="section-header center">
             <span className="eyebrow">Who This Is For</span>
-            <h2>Designed for Professionals Who&hellip;</h2>
+            <h2>Built for Organizations That&hellip;</h2>
           </div>
           <div className="audience-list">
             {audience.map((item) => (
@@ -113,24 +148,40 @@ export default function CourseDetail() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <div className="section-header center">
-            <span className="eyebrow">What&rsquo;s Included</span>
-            <h2>Everything You Need to Succeed</h2>
+            <span className="eyebrow">How It Runs</span>
+            <h2>The Engagement, and What You Keep</h2>
           </div>
-          <div className="included-list">
-            {included.map((item) => (
-              <div key={item} className="audience-item">
-                <span className="check-dot">&#10003;</span>
-                {item}
+          <div className="grid-2">
+            <div>
+              <h3 style={{ fontSize: 18, marginBottom: 18 }}>How the work runs</h3>
+              <div className="stack-list">
+                {engagement.map((item) => (
+                  <div key={item} className="audience-item">
+                    <span className="check-dot">&#10003;</span>
+                    {item}
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <div>
+              <h3 style={{ fontSize: 18, marginBottom: 18 }}>What your organization owns after</h3>
+              <div className="stack-list">
+                {deliverables.map((item) => (
+                  <div key={item} className="audience-item">
+                    <span className="check-dot">&#10003;</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <div className="section-header center">
             <span className="eyebrow">FAQ</span>
@@ -162,7 +213,7 @@ export default function CourseDetail() {
             <span className="eyebrow">{closingEyebrow}</span>
             <h2>{closingTitle}</h2>
             <p>{closingBody}</p>
-            <Link to="/contact" className="btn btn-primary">Contact Us to Get Started</Link>
+            <Link to="/capability-assessment" className="btn btn-primary">Start With a Capability Assessment</Link>
           </div>
         </div>
       </section>

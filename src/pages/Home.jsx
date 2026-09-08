@@ -3,16 +3,9 @@ import CourseCard from '../components/CourseCard.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
 import Testimonial from '../components/Testimonial.jsx'
 import NetworkArt from '../components/NetworkArt.jsx'
-import courses from '../data/courses.js'
+import courses, { getFeaturedCourses } from '../data/courses.js'
 
 const TESTIMONIALS = [
-  {
-    quote: "This program changed how I think about learning. Instead of just memorizing tools, I now know how to adapt and pivot when new technologies emerge. It's the best investment I've made in myself.",
-    name: 'Aisha K.',
-    role: 'Graduate Student',
-    initials: 'AK',
-    color: '#0ea5e9',
-  },
   {
     quote: 'Our team walked away with not just technical skills, but the confidence to apply them immediately. The balance between theory and real-world application was exactly what we needed.',
     name: 'Michael T.',
@@ -28,6 +21,13 @@ const TESTIMONIALS = [
     color: '#6366f1',
   },
   {
+    quote: "This program changed how I think about learning. Instead of just memorizing tools, I now know how to adapt and pivot when new technologies emerge. It's the best investment I've made in myself.",
+    name: 'Aisha K.',
+    role: 'Graduate Student',
+    initials: 'AK',
+    color: '#0ea5e9',
+  },
+  {
     quote: 'What I appreciated most about the coursework was how applied it was. Instead of just theory, I was working on hands-on projects that I could immediately connect to my career goals.',
     name: 'James W.',
     role: 'Early-Career Data Analyst',
@@ -37,24 +37,29 @@ const TESTIMONIALS = [
 ]
 
 export default function Home() {
+  const featured = getFeaturedCourses()
+
   return (
     <>
       <section className="hero">
         <div className="container">
           <div>
-            <span className="eyebrow">Learning That Lasts</span>
+            <span className="eyebrow">On-Site AI Capability Building</span>
             <h1>
-              We Teach People <span className="hero-accent">How to Learn.</span>
+              Generic AI training doesn&rsquo;t survive contact with{' '}
+              <span className="hero-accent">your operation.</span>
             </h1>
             <p className="lead">
-              In a world where skills expire faster than ever, the ability to learn anything
-              quickly isn&rsquo;t just valuable&mdash;it&rsquo;s essential. We help organizations
-              and individuals build that capability.
+              We build the curriculum on-site, around your workflows, your systems, and your
+              data. Your team learns by doing their actual work differently. Then they keep
+              doing it after we leave.
             </p>
             <div className="hero-cta">
-
-              <Link to="/about" className="btn btn-ghost">
-                About Us
+              <Link to="/capability-assessment" className="btn btn-primary">
+                Request a Capability Assessment
+              </Link>
+              <Link to="/contact" className="btn btn-ghost">
+                Talk to Us
               </Link>
             </div>
             <div className="hero-stats">
@@ -64,11 +69,11 @@ export default function Home() {
               </div>
               <div className="hero-stat">
                 <b>5</b>
-                <span>Courses and Programs</span>
+                <span>Practice Areas</span>
               </div>
               <div className="hero-stat">
-                <b>4+</b>
-                <span>Focus Areas</span>
+                <b>100%</b>
+                <span>Built on Your Data</span>
               </div>
             </div>
           </div>
@@ -80,47 +85,54 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <div className="featured-course">
-            <div>
-              <span className="eyebrow">Featured Course</span>
-              <h2>Rapid Learning in the Age of Disruption</h2>
-              <p style={{ marginTop: 16, color: 'var(--slate-400)' }}>
-                Learn how to master new skills and technologies in weeks instead of months with
-                our evidence-based course on rapid learning. In just four weeks, you&rsquo;ll build
-                a personalized learning system while making real progress on a skill you actually
-                need for your career.
-              </p>
-              <Link to="/courses/rapid-learning-in-the-age-of-disruption" className="btn btn-primary">
-                More Information
-              </Link>
-            </div>
-            <ul>
-              <li>
-                <span className="check-dot">&#10003;</span>
-                Master the cognitive science behind how your brain actually learns and retains information
-              </li>
-              <li>
-                <span className="check-dot">&#10003;</span>
-                Develop strategic frameworks to identify high-leverage concepts and create efficient learning paths
-              </li>
-              <li>
-                <span className="check-dot">&#10003;</span>
-                Make demonstrable progress on a real technology or skill relevant to your career goals
-              </li>
-              <li>
-                <span className="check-dot">&#10003;</span>
-                Gain lifetime capability to adapt quickly as industries evolve and new technologies emerge
-              </li>
-            </ul>
+          <div className="section-header">
+            <span className="eyebrow">Where Most Engagements Start</span>
+            <h2>Two practices lead the work</h2>
+            <p>
+              One builds the capacity to absorb whatever technology arrives next. The other puts
+              working AI inside the workflows your operation already runs on.
+            </p>
+          </div>
+          <div className="featured-stack">
+            {featured.map((course) => (
+              <div key={course.slug} className="featured-course">
+                <div>
+                  <span className="eyebrow">{course.track} &middot; {course.duration}</span>
+                  <h2>{course.title}</h2>
+                  <p style={{ marginTop: 16, color: 'var(--slate-400)' }}>{course.tagline}</p>
+                  <p style={{ marginTop: 14, color: 'var(--slate-400)', fontSize: 14.5 }}>
+                    <strong style={{ color: 'var(--teal-400)' }}>Measured against:</strong>{' '}
+                    {course.metric}
+                  </p>
+                  <Link to={`/practices/${course.slug}`} className="btn btn-primary">
+                    See How It Works
+                  </Link>
+                </div>
+                <ul>
+                  {course.outcomes.map((o) => (
+                    <li key={o.title}>
+                      <span className="check-dot">&#10003;</span>
+                      <span>
+                        <strong>{o.title}.</strong> {o.body}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="section section-alt">
         <div className="container">
-          <div className="section-header">
-            <span className="eyebrow">Course Catalog</span>
-            <h2>Our Courses</h2>
+          <div className="section-header center">
+            <span className="eyebrow">Practice Areas</span>
+            <h2>Our Practices</h2>
+            <p>
+              Named practices with a stated method. The curriculum inside each one is assembled
+              on-site, around the work your team is already accountable for.
+            </p>
           </div>
           <div className="grid-3">
             {courses.map((course) => (
@@ -137,25 +149,21 @@ export default function Home() {
             <h2>What Makes Us Different</h2>
           </div>
           <div className="grid-4">
-            <FeatureCard icon={<span>&#129504;</span>} title="Learning Sciences Focused">
-              Our foundation is rooted in research-based learning science. We design methods and
-              environments that improve retention, comprehension, and problem-solving skills so
-              learners can apply knowledge in real-world settings.
+            <FeatureCard icon={<span>&#128202;</span>} title="Built on your data">
+              No sample datasets, no generic case studies. We work from your systems, your
+              constraints, and the problems your team is already stuck on.
             </FeatureCard>
-            <FeatureCard icon={<span>&#9889;</span>} title="Technology-Enhanced Learning">
-              From artificial intelligence to immersive simulations, we integrate the latest tools
-              into the learning process. Technology is not the focus, but the enabler&mdash;helping
-              learners access, practice, and master skills more efficiently.
+            <FeatureCard icon={<span>&#128736;</span>} title="Taught by operators">
+              Your instructors have run global supply chain operations and built the systems
+              being taught. Not trainers who read the documentation last month.
             </FeatureCard>
-            <FeatureCard icon={<span>&#129309;</span>} title="Human-Centered Design">
-              We build experiences around accessibility, inclusion, and diverse learning needs.
-              Every course, tool, or program prioritizes usability and equity, ensuring all
-              learners have a pathway to succeed.
+            <FeatureCard icon={<span>&#128207;</span>} title="Measured against your numbers">
+              Every engagement starts with a baseline and ends against an operating metric you
+              already own. Most organizations cannot measure AI ROI at all. You will.
             </FeatureCard>
-            <FeatureCard icon={<span>&#127919;</span>} title="Applied &amp; Experiential Learning">
-              We emphasize hands-on projects, real-world scenarios, and reflective practice.
-              Learners don&rsquo;t just study concepts&mdash;they apply them, solve problems, and
-              build confidence in authentic contexts.
+            <FeatureCard icon={<span>&#129309;</span>} title="Designed to be handed off">
+              The goal is a team that does not need us next year. We build the internal
+              capability and the practice that sustains it.
             </FeatureCard>
           </div>
         </div>
@@ -163,9 +171,40 @@ export default function Home() {
 
       <section className="section section-alt">
         <div className="container">
+          <div className="grid-2">
+            <div>
+              <span className="eyebrow">Our Vision</span>
+              <h2 style={{ fontSize: 26, marginBottom: 16 }}>
+                Stop hiring for skills you could build internally.
+              </h2>
+              <p style={{ color: 'var(--slate-600)' }}>
+                The talent you need is usually already on your payroll. What&rsquo;s missing is a
+                way to build capability fast enough to keep up, and a reason for it to stick. We
+                embed with your team, restructure how the work gets done, and leave the
+                capability behind.
+              </p>
+            </div>
+            <div>
+              <span className="eyebrow">Our Mission</span>
+              <h2 style={{ fontSize: 26, marginBottom: 16 }}>
+                We don&rsquo;t just train your teams. We teach them how to train themselves.
+              </h2>
+              <p style={{ color: 'var(--slate-600)' }}>
+                Technical skills have a two-to-three year half-life. Any program that only
+                transfers today&rsquo;s tools is depreciating the day it ends. We build the
+                underlying capability to absorb whatever comes next, using scenario-based
+                instruction refined over two decades of learning science research.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
           <div className="section-header center">
             <span className="eyebrow">Testimonials</span>
-            <h2>Trusted by Students and Professionals</h2>
+            <h2>What teams say</h2>
           </div>
           <div className="grid-4">
             {TESTIMONIALS.map((t) => (
@@ -175,14 +214,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <div className="cta-band">
-            <span className="eyebrow">Contact Us</span>
-            <h2>We&rsquo;d love to hear from you. Let&rsquo;s learn and grow together.</h2>
-            <p>Your journey starts with one message. Send it today.</p>
-            <Link to="/contact" className="btn btn-primary">
-              Contact Us
+            <span className="eyebrow">Capability Assessment</span>
+            <h2>Start with a capability assessment.</h2>
+            <p>
+              A two-week diagnostic that baselines where your team is, identifies the workflows
+              worth changing first, and produces a costed roadmap. It stands on its own, and it
+              scopes everything that follows.
+            </p>
+            <Link to="/capability-assessment" className="btn btn-primary">
+              See What&rsquo;s Involved
             </Link>
           </div>
         </div>

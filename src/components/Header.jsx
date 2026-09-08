@@ -6,7 +6,7 @@ import courses from '../data/courses.js'
 export default function Header() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
-  const coursesActive = location.pathname.startsWith('/courses')
+  const practicesActive = location.pathname.startsWith('/practices')
   const detailsRef = useRef(null)
 
   const closeAll = () => {
@@ -35,8 +35,8 @@ export default function Header() {
           </NavLink>
 
           <details className="nav-dropdown" ref={detailsRef}>
-            <summary className={coursesActive ? 'active' : ''}>
-              Courses
+            <summary className={practicesActive ? 'active' : ''}>
+              Practices
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" className="caret">
                 <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -45,7 +45,7 @@ export default function Header() {
               {courses.map((course) => (
                 <li key={course.slug}>
                   <NavLink
-                    to={`/courses/${course.slug}`}
+                    to={`/practices/${course.slug}`}
                     onClick={closeAll}
                     className={({ isActive }) => (isActive ? 'active' : '')}
                   >
@@ -65,7 +65,7 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          <Link to="/contact" className="btn btn-primary">
+          <Link to="/capability-assessment" className="btn btn-primary">
             Get Started
           </Link>
           <button

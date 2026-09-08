@@ -4,6 +4,7 @@ import courses from '../data/courses.js'
 
 const QUICK_LINKS = [
   { to: '/', label: 'Home' },
+  { to: '/capability-assessment', label: 'Capability Assessment' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -19,8 +20,9 @@ export default function Footer() {
               <span className="brand-name">UpLearn.io</span>
             </Link>
             <p className="footer-about">
-              Custom courses and workshops that teach individuals and teams how to adapt,
-              pivot, and thrive in a rapidly changing technological landscape.
+              On-site AI capability building for operations teams. We build the curriculum
+              around your workflows, your systems, and your data, then leave the capability
+              behind.
             </p>
             <div className="footer-social">
               <a href="https://www.facebook.com/profile.php?id=61581394787873" target="_blank" rel="noreferrer" aria-label="Facebook">
@@ -36,11 +38,11 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4>Courses</h4>
+            <h4>Practices</h4>
             <ul>
               {courses.map((course) => (
                 <li key={course.slug}>
-                  <Link to={`/courses/${course.slug}`}>{course.title}</Link>
+                  <Link to={`/practices/${course.slug}`}>{course.title}</Link>
                 </li>
               ))}
             </ul>
